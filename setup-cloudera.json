@@ -68,7 +68,7 @@
             "[concat(parameters('scriptsUri'), '/scripts/efm.properties')]",
             "[concat(parameters('scriptsUri'), '/scripts/mariadb.config')]",
             "[concat(parameters('scriptsUri'), '/scripts/', parameters('tshirtSize'), 'default_template.json')]",  
-            "[concat(parameters('scriptsUri'), '/scripts/create_cluster.py')]"            
+            "[concat(parameters('scriptsUri'), '/scripts/', parameters('tshirtSize'), 'create_cluster.py')]"            
           ]
         },
         "protectedSettings": {
