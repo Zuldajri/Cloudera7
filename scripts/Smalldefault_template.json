@@ -54,32 +54,6 @@
     } ]
   }, 
   {
-    "refName" : "sqoop",
-    "serviceType" : "SQOOP_1_CLIENT",
-    "serviceConfigs" : [ {
-      "name" : "sqoop_database_type",
-      "variable" : "sqoop-database_type"
-    }, {
-      "name" : "sqoop_database_password",
-      "variable" : "sqoop-database_password"
-    }, {
-      "name" : "sqoop_database_host",
-      "variable" : "sqoop-database_host"
-    }, {
-      "name" : "sqoop_database_user",
-      "variable" : "sqoop-database_user"
-    } ],
-    "roleConfigGroups" : [ {
-      "refName" : "sqoop-SQOOP_SERVER-BASE",
-      "roleType" : "SQOOP_SERVER",
-      "base" : true
-    }, {
-      "refName" : "sqoop_client-GATEWAY-BASE",
-      "roleType" : "GATEWAY",
-      "base" : true
-    } ]
-  },
-  {
     "refName" : "impala",
     "serviceType" : "IMPALA",
     "roleConfigGroups" : [ {
@@ -344,8 +318,6 @@
       "solr-SOLR_SERVER-BASE", 
       "spark_on_yarn-GATEWAY-BASE", 
       "spark_on_yarn-SPARK_YARN_HISTORY_SERVER-BASE", 
-      "sqoop-SQOOP_SERVER-BASE", 
-      "sqoop_client-GATEWAY-BASE", 
       "yarn-JOBHISTORY-BASE", 
       "yarn-RESOURCEMANAGER-BASE", 
       "yarn-GATEWAY-BASE",
@@ -363,7 +335,6 @@
       "kafka-KAFKA_BROKER-BASE",
       "spark_on_yarn-GATEWAY-BASE", 
       "kudu-KUDU_TSERVER-BASE",
-      "sqoop_client-GATEWAY-BASE", 
       "yarn-NODEMANAGER-BASE" 
     ]
   } ],
@@ -396,18 +367,6 @@
       "value" : "mysql"
     }, {
       "name" : "hue-database_user",
-      "value" : "root"
-    },{
-      "name" : "sqoop-database_host",
-      "value" : "dnsNamePrefix-mn0.region.cloudapp.azure.com"
-    }, {
-      "name" : "sqoop-database_password",
-      "value" : "cloudera"
-    }, {
-      "name" : "sqoop-database_type",
-      "value" : "mysql"
-    }, {
-      "name" : "sqoop-database_user",
       "value" : "root"
     },{
       "name": "kudu-KUDU_MASTER-BASE-fs_data_dirs",
