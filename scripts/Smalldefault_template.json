@@ -55,7 +55,7 @@
   }, 
   {
     "refName" : "sqoop",
-    "serviceType" : "SQOOP",
+    "serviceType" : "SQOOP_1_CLIENT",
     "serviceConfigs" : [ {
       "name" : "sqoop_database_type",
       "variable" : "sqoop-database_type"
