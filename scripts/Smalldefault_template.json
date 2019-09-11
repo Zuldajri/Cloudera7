@@ -224,23 +224,7 @@
       "roleType" : "MASTER",
       "base" : true
     } ]
-  }, {
-    "refName" : "mapreduce",
-    "serviceType" : "MAPREDUCE",
-    "roleConfigGroups" : [ {
-      "refName" : "mapreduce-GATEWAY-BASE",
-      "roleType" : "GATEWAY",
-      "base" : true
-    }, {
-      "refName" : "mapreduce-JOBTRACKER-BASE",
-      "roleType" : "JOBTRACKER",
-      "base" : true
-    }, {
-      "refName" : "mapreduce-TASKTRACKER-BASE",
-      "roleType" : "TASKTRACKER",
-      "base" : true
-    } ]  
-  },
+  }, 
   {
     "refName": "kafka",
     "roleConfigGroups": [
@@ -357,8 +341,6 @@
       "kudu-KUDU_MASTER-BASE",
       "ks_indexer-HBASE_INDEXER-BASE", 
       "oozie-OOZIE_SERVER-BASE", 
-      "mapreduce-GATEWAY-BASE", 
-      "mapreduce-JOBTRACKER-BASE", 
       "solr-SOLR_SERVER-BASE", 
       "spark_on_yarn-GATEWAY-BASE", 
       "spark_on_yarn-SPARK_YARN_HISTORY_SERVER-BASE", 
@@ -380,7 +362,6 @@
       "impala-IMPALAD-BASE", 
       "kafka-KAFKA_BROKER-BASE",
       "spark_on_yarn-GATEWAY-BASE", 
-      "mapreduce-TASKTRACKER-BASE", 
       "kudu-KUDU_TSERVER-BASE",
       "sqoop_client-GATEWAY-BASE", 
       "yarn-NODEMANAGER-BASE" 
