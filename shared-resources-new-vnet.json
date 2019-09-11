@@ -1,0 +1,98 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "networkSpec": {
+      "type": "object"
+    },
+    "masterNodeASName": {
+      "type": "string"
+    },
+    "dataNodeASName": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+        "apiVersion": "2018-06-01",
+      "type": "Microsoft.Compute/availabilitySets",
+      "name": "[parameters('masterNodeASName')]",
+      "sku": {
+        "name": "Aligned"
+    },
+      "location": "[parameters('location')]",
+      "properties": { 
+        "platformUpdateDomainCount": 2,
+        "platformFaultDomainCount": 2
+                    }
+    },
+    {
+        "apiVersion": "2018-06-01",
+      "type": "Microsoft.Compute/availabilitySets",
+      "name": "[parameters('dataNodeASName')]",
+       "sku": {
+        "name": "Aligned"
+    },
+      "location": "[parameters('location')]",
+      "properties": { 
+       "platformUpdateDomainCount": 2,
+        "platformFaultDomainCount": 2
+      }
+    },
+    {
+        "apiVersion": "2018-08-01",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "[concat(parameters('networkSpec').virtualNetworkName, '-sg')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "securityRules": [
+          {
+            "name": "SSH",
+            "properties": {
+              "description": "Allows SSH traffic",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "22",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 100,
+              "direction": "Inbound"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2018-08-01",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[parameters('networkSpec').virtualNetworkName]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/networkSecurityGroups/', parameters('networkSpec').virtualNetworkName, '-sg')]"
+      ],
+      "location": "[parameters('location')]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('networkSpec').addressPrefixes]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[parameters('networkSpec').virtualNetworkSubnetName]",
+            "properties": {
+              "addressPrefix": "[parameters('networkSpec').subnetPrefix]",
+              "networkSecurityGroup": {
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', concat(parameters('networkSpec').virtualNetworkName, '-sg'))]"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
