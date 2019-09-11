@@ -196,14 +196,14 @@ pip install cm_client >> "${LOG_FILE}" 2>&1
 
 #temporary temporary try !!
 
-sed -i "s/ClusterName/$CLUSTERNAME/g" /var/lib/waagent/custom-script/download/1/default_template.json
-sed -i "s/dnsNamePrefix/$NAMEPREFIX/g" /var/lib/waagent/custom-script/download/1/default_template.json
-sed -i "s/region/$LOCATION/g" /var/lib/waagent/custom-script/download/1/default_template.json
+sed -i "s/ClusterName/$CLUSTERNAME/g" /var/lib/waagent/custom-script/download/1/${TSHIRTSIZE}default_template.json
+sed -i "s/dnsNamePrefix/$NAMEPREFIX/g" /var/lib/waagent/custom-script/download/1/${TSHIRTSIZE}default_template.json
+sed -i "s/region/$LOCATION/g" /var/lib/waagent/custom-script/download/1/${TSHIRTSIZE}default_template.json
 
-sed -i "s/utilisateur/$User/g" /var/lib/waagent/custom-script/download/1/create_cluster.py
-sed -i "s/passe/$Password/g" /var/lib/waagent/custom-script/download/1/create_cluster.py
+sed -i "s/utilisateur/$User/g" /var/lib/waagent/custom-script/download/1/${TSHIRTSIZE}create_cluster.py
+sed -i "s/passe/$Password/g" /var/lib/waagent/custom-script/download/1/${TSHIRTSIZE}create_cluster.py
 
-python /var/lib/waagent/custom-script/download/1/create_cluster.py /var/lib/waagent/custom-script/download/1/default_template.json
+python /var/lib/waagent/custom-script/download/1/${TSHIRTSIZE}create_cluster.py /var/lib/waagent/custom-script/download/1/${TSHIRTSIZE}default_template.json
 
 # configure and start EFM and Minifi
 service efm start
