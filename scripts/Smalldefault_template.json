@@ -15,8 +15,7 @@
     "https://archive.cloudera.com/spark/parcels/latest/", 
     "https://archive.cloudera.com/sqoop-teradata-connector1/latest/", 
     "https://archive.cloudera.com/sqoop-connectors/parcels/latest/", 
-    "https://archive.cloudera.com/sqoop-netezza-connector1/latest/",
-    "https://archive.cloudera.com/cdh6/{latest_supported}/parcels/"
+    "https://archive.cloudera.com/sqoop-netezza-connector1/latest/"
   ],
   "products" : [ {
     "version" : "6.3.0-1.cdh6.3.0.p0.1279813",
@@ -134,13 +133,6 @@
   }, {
     "refName" : "hdfs",
     "serviceType" : "HDFS",
-    "serviceConfigs" : [ {
-        "name" : "service_health_suppression_hdfs_verify_ec_with_topology",
-        "value" : "true"
-      }, {
-        "name" : "service_config_suppression_nameservice_namenodes_heap_size_validator",
-        "value" : "true"
-      } ],
     "roleConfigGroups" : [ {
       "refName" : "hdfs-NAMENODE-BASE",
       "roleType" : "NAMENODE",
@@ -207,6 +199,15 @@
       "base" : true
     } ]
   }, 
+  {
+    "refName" : "sqoop_client",
+    "serviceType" : "SQOOP_CLIENT",
+    "roleConfigGroups" : [ {
+      "refName" : "sqoop_client-GATEWAY-BASE",
+      "roleType" : "GATEWAY",
+      "base" : true
+    } ]
+  },
   {
     "refName": "kafka",
     "roleConfigGroups": [
@@ -297,45 +298,7 @@
       "roleType" : "HIVEMETASTORE",
       "base" : true
     } ]
-  },
-  {
-    "refName" : "sentry",
-    "serviceType" : "SENTRY",
-    "serviceConfigs" : [ {
-      "name" : "sentry_server_database_password",
-      "variable" : "sentry-sentry_server_database_password"
-    }, {
-      "name" : "sentry_server_database_user",
-      "variable" : "sentry-sentry_server_database_user"
-    }, {
-      "name" : "zookeeper_service",
-      "ref" : "zookeeper"
-    }, {
-      "name" : "sentry_server_database_host",
-      "variable" : "sentry-sentry_server_database_host"
-    }, {
-      "name" : "hdfs_service",
-      "ref" : "hdfs"
-    } ],
-    "roleConfigGroups" : [ {
-      "refName" : "sentry-GATEWAY-BASE",
-      "roleType" : "GATEWAY",
-      "base" : true
-    }, {
-      "refName" : "sentry-SENTRY_SERVER-BASE",
-      "roleType" : "SENTRY_SERVER",
-      "base" : true
-    } ]
-  }, {
-    "refName" : "sqoop_client",
-    "serviceType" : "SQOOP_CLIENT",
-    "roleConfigGroups" : [ {
-      "refName" : "sqoop_client-GATEWAY-BASE",
-      "roleType" : "GATEWAY",
-      "base" : true
-    } ]
-  } 
-],
+  } ],
   "hostTemplates" : [ {
     "refName" : "HostTemplate-0-from-dnsNamePrefix-mn0.region.cloudapp.azure.com",
     "cardinality" : 1,
@@ -354,6 +317,7 @@
       "hive-HIVESERVER2-BASE", 
       "hue-HUE_LOAD_BALANCER-BASE", 
       "hue-HUE_SERVER-BASE", 
+      "sqoop_client-GATEWAY-BASE",
       "impala-CATALOGSERVER-BASE", 
       "impala-STATESTORE-BASE", 
       "kafka-GATEWAY-BASE",
@@ -364,9 +328,6 @@
       "solr-SOLR_SERVER-BASE", 
       "spark_on_yarn-GATEWAY-BASE", 
       "spark_on_yarn-SPARK_YARN_HISTORY_SERVER-BASE", 
-      "sentry-GATEWAY-BASE", 
-      "sentry-SENTRY_SERVER-BASE",
-      "sqoop_client-GATEWAY-BASE",
       "yarn-JOBHISTORY-BASE", 
       "yarn-RESOURCEMANAGER-BASE", 
       "yarn-GATEWAY-BASE",
@@ -380,9 +341,9 @@
       "hbase-REGIONSERVER-BASE", 
       "hdfs-DATANODE-BASE", 
       "hive-GATEWAY-BASE", 
+      "sqoop_client-GATEWAY-BASE",
       "impala-IMPALAD-BASE", 
       "kafka-KAFKA_BROKER-BASE",
-      "sqoop_client-GATEWAY-BASE",
       "spark_on_yarn-GATEWAY-BASE", 
       "kudu-KUDU_TSERVER-BASE",
       "yarn-NODEMANAGER-BASE" 
@@ -426,16 +387,6 @@
       "name": "kudu-KUDU_MASTER-BASE-fs_wal_dir",
       "value": "/kudu/mwal"
     },
-    {
-        "name" : "sentry-sentry_server_database_host",
-        "value" : "dnsNamePrefix-mn0.region.cloudapp.azure.com"
-      }, {
-        "name" : "sentry-sentry_server_database_password",
-        "value" : "cloudera"
-      }, {
-        "name" : "sentry-sentry_server_database_user",
-        "value" : "root"
-      },
     {
       "name": "kudu-KUDU_TSERVER-BASE-fs_data_dirs",
       "value": "/kudu/tdir"
