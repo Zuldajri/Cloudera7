@@ -133,6 +133,13 @@
   }, {
     "refName" : "hdfs",
     "serviceType" : "HDFS",
+    "serviceConfigs" : [ {
+        "name" : "service_health_suppression_hdfs_verify_ec_with_topology",
+        "value" : "true"
+      }, {
+        "name" : "service_config_suppression_nameservice_namenodes_heap_size_validator",
+        "value" : "true"
+      } ],
     "roleConfigGroups" : [ {
       "refName" : "hdfs-NAMENODE-BASE",
       "roleType" : "NAMENODE",
