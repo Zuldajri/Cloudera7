@@ -23,12 +23,6 @@
     "fqdn": {
       "type": "string"
     },
-    "cmUsername": {
-      "type": "string"
-    },
-    "cmPassword": {
-      "type": "securestring"
-    },
     "installCDH": {
       "type": "string"
     },
