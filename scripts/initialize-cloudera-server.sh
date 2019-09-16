@@ -19,13 +19,11 @@ worker_ip=$4
 HA=$5
 User=$6
 Password=$7
-cmUser=$8
-cmPassword=$9
-VMSIZE=${10}
-CLUSTERNAME=${11}
-NAMEPREFIX=${12}
-LOCATION=${13}
-TSHIRTSIZE=${14}
+VMSIZE=$8
+CLUSTERNAME=$9
+NAMEPREFIX=${10}
+LOCATION=${11}
+TSHIRTSIZE=${12}
 
 
 
