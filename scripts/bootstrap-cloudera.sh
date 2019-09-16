@@ -129,7 +129,7 @@ log "Worker ip to be supplied to next script: $worker_ip"
 log "BEGIN: Starting detached script to finalize initialization"
 if [ "$INSTALLCDH" == "True" ]
 then
-  if ! sh initialize-cloudera-server.sh "$CLUSTERNAME" "$key" "$mip" "$worker_ip" "$HA" "$ADMINUSER" "$PASSWORD" "$CMUSER" "$CMPASSWORD" "$VMSIZE" "$CLUSTERNAME" "$NAMEPREFIX" "$LOCATION" "$TSHIRTSIZE" >/dev/null 2>&1
+  if ! sh initialize-cloudera-server.sh "$CLUSTERNAME" "$key" "$mip" "$worker_ip" "$HA" "$ADMINUSER" "$PASSWORD" "$VMSIZE" "$CLUSTERNAME" "$NAMEPREFIX" "$LOCATION" "$TSHIRTSIZE" >/dev/null 2>&1
   then
     log "initialize-cloudera-server.sh returned non-zero exit code"
     log "------- bootstrap-cloudera.sh failed -------"
