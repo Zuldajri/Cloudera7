@@ -201,7 +201,7 @@ sed -i "s/region/$LOCATION/g" /var/lib/waagent/custom-script/download/1/${TSHIRT
 sed -i "s/utilisateur/$User/g" /var/lib/waagent/custom-script/download/1/${TSHIRTSIZE}create_cluster.py
 sed -i "s/passe/$Password/g" /var/lib/waagent/custom-script/download/1/${TSHIRTSIZE}create_cluster.py
 
-python /var/lib/waagent/custom-script/download/1/${TSHIRTSIZE}create_cluster.py /var/lib/waagent/custom-script/download/1/${TSHIRTSIZE}default_template.json
+#python /var/lib/waagent/custom-script/download/1/${TSHIRTSIZE}create_cluster.py /var/lib/waagent/custom-script/download/1/${TSHIRTSIZE}default_template.json
 
 # configure and start EFM and Minifi
 service efm start
