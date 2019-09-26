@@ -192,7 +192,6 @@ pip install --upgrade pip
 pip install cm_client >> "${LOG_FILE}" 2>&1
 
 
-#temporary temporary try !!
 
 sed -i "s/ClusterName/$CLUSTERNAME/g" /var/lib/waagent/custom-script/download/1/${TSHIRTSIZE}default_template.json
 sed -i "s/dnsNamePrefix/$NAMEPREFIX/g" /var/lib/waagent/custom-script/download/1/${TSHIRTSIZE}default_template.json
