@@ -11,6 +11,7 @@
     "https://archive.cloudera.com/accumulo-c5/parcels/latest/", 
     "https://archive.cloudera.com/accumulo6/6.1/parcels/", 
     "https://archive.cloudera.com/kafka/parcels/latest/", 
+    "http://archive.cloudera.com/kudu/parcels/latest/", 
     "https://archive.cloudera.com/spark/parcels/latest/", 
     "https://archive.cloudera.com/sqoop-teradata-connector1/latest/", 
     "https://archive.cloudera.com/sqoop-connectors/parcels/latest/", 
@@ -52,32 +53,6 @@
       "base" : true
     } ]
   }, 
-  {
-    "refName" : "sqoop",
-    "serviceType" : "SQOOP",
-    "serviceConfigs" : [ {
-      "name" : "sqoop_database_type",
-      "variable" : "sqoop-database_type"
-    }, {
-      "name" : "sqoop_database_password",
-      "variable" : "sqoop-database_password"
-    }, {
-      "name" : "sqoop_database_host",
-      "variable" : "sqoop-database_host"
-    }, {
-      "name" : "sqoop_database_user",
-      "variable" : "sqoop-database_user"
-    } ],
-    "roleConfigGroups" : [ {
-      "refName" : "sqoop-SQOOP_SERVER-BASE",
-      "roleType" : "SQOOP_SERVER",
-      "base" : true
-    }, {
-      "refName" : "sqoop_client-GATEWAY-BASE",
-      "roleType" : "GATEWAY",
-      "base" : true
-    } ]
-  },
   {
     "refName" : "impala",
     "serviceType" : "IMPALA",
@@ -158,6 +133,13 @@
   }, {
     "refName" : "hdfs",
     "serviceType" : "HDFS",
+    "serviceConfigs" : [ {
+        "name" : "service_health_suppression_hdfs_verify_ec_with_topology",
+        "value" : "true"
+      }, {
+        "name" : "service_config_suppression_nameservice_namenodes_heap_size_validator",
+        "value" : "true"
+      } ],
     "roleConfigGroups" : [ {
       "refName" : "hdfs-NAMENODE-BASE",
       "roleType" : "NAMENODE",
@@ -223,23 +205,16 @@
       "roleType" : "MASTER",
       "base" : true
     } ]
-  }, {
-    "refName" : "mapreduce",
-    "serviceType" : "MAPREDUCE",
+  }, 
+  {
+    "refName" : "sqoop_client",
+    "serviceType" : "SQOOP_CLIENT",
     "roleConfigGroups" : [ {
-      "refName" : "mapreduce-GATEWAY-BASE",
+      "refName" : "sqoop_client-GATEWAY-BASE",
       "roleType" : "GATEWAY",
       "base" : true
-    }, {
-      "refName" : "mapreduce-JOBTRACKER-BASE",
-      "roleType" : "JOBTRACKER",
-      "base" : true
-    }, {
-      "refName" : "mapreduce-TASKTRACKER-BASE",
-      "roleType" : "TASKTRACKER",
-      "base" : true
     } ]
-  },  
+  },
   {
     "refName": "kafka",
     "roleConfigGroups": [
@@ -267,6 +242,42 @@
       }
     ],
     "serviceType": "KAFKA"
+  },
+  {
+    "refName": "kudu",
+    "roleConfigGroups": [
+      {
+        "base": true,
+        "configs": [
+          {
+            "name": "fs_wal_dir",
+            "variable": "kudu-KUDU_MASTER-BASE-fs_wal_dir"
+          },
+          {
+            "name": "fs_data_dirs",
+            "variable": "kudu-KUDU_MASTER-BASE-fs_data_dirs"
+          }
+        ],
+        "refName": "kudu-KUDU_MASTER-BASE",
+        "roleType": "KUDU_MASTER"
+      },
+      {
+        "base": true,
+        "configs": [
+          {
+            "name": "fs_wal_dir",
+            "variable": "kudu-KUDU_TSERVER-BASE-fs_wal_dir"
+          },
+          {
+            "name": "fs_data_dirs",
+            "variable": "kudu-KUDU_TSERVER-BASE-fs_data_dirs"
+          }
+        ],
+        "refName": "kudu-KUDU_TSERVER-BASE",
+        "roleType": "KUDU_TSERVER"
+      }
+    ],
+    "serviceType": "KUDU"
   },
   {
     "refName" : "hive",
@@ -300,50 +311,58 @@
     "cardinality" : 1,
     "roleConfigGroupsRefNames" : [ 
       "FLUME-AGENT-BASE",
-      "hbase-MASTER-BASE",
       "hbase-GATEWAY-BASE",
       "hbase-HBASETHRIFTSERVER-BASE",
+      "ks_indexer-HBASE_INDEXER-BASE", 
       "hdfs-BALANCER-BASE", 
-      "hdfs-NAMENODE-BASE", 
       "hdfs-GATEWAY-BASE", 
       "hdfs-NFSGATEWAY-BASE", 
-      "hdfs-SECONDARYNAMENODE-BASE", 
+      "hdfs-SECONDARYNAMENODE-BASE",
       "hive-GATEWAY-BASE", 
       "hive-HIVEMETASTORE-BASE", 
-      "hive-HIVESERVER2-BASE", 
       "hue-HUE_LOAD_BALANCER-BASE", 
       "hue-HUE_SERVER-BASE", 
-      "impala-CATALOGSERVER-BASE", 
-      "impala-STATESTORE-BASE", 
+      "sqoop_client-GATEWAY-BASE",
+      "oozie-OOZIE_SERVER-BASE", 
       "kafka-GATEWAY-BASE",
       "kafka-KAFKA_BROKER-BASE",
-      "ks_indexer-HBASE_INDEXER-BASE", 
-      "mapreduce-GATEWAY-BASE", 
-      "mapreduce-JOBTRACKER-BASE", 
-      "oozie-OOZIE_SERVER-BASE", 
       "solr-SOLR_SERVER-BASE", 
       "spark_on_yarn-GATEWAY-BASE", 
+      "yarn-GATEWAY-BASE"
+    ]
+  },{
+    "refName" : "HostTemplate-1-from-dnsNamePrefix-mn1.region.cloudapp.azure.com",
+    "cardinality" : 1,
+    "roleConfigGroupsRefNames" : [ 
+      "FLUME-AGENT-BASE",
+      "hbase-MASTER-BASE",
+      "hdfs-NAMENODE-BASE", 
+      "hive-HIVESERVER2-BASE", 
+      "sqoop_client-GATEWAY-BASE",
+      "impala-CATALOGSERVER-BASE", 
+      "impala-STATESTORE-BASE", 
+      "kafka-KAFKA_BROKER-BASE",
+      "kudu-KUDU_MASTER-BASE",
+      "hive-GATEWAY-BASE", 
+      "spark_on_yarn-GATEWAY-BASE", 
       "spark_on_yarn-SPARK_YARN_HISTORY_SERVER-BASE", 
-      "sqoop-SQOOP_SERVER-BASE", 
-      "sqoop_client-GATEWAY-BASE", 
       "yarn-JOBHISTORY-BASE", 
       "yarn-RESOURCEMANAGER-BASE", 
-      "yarn-GATEWAY-BASE",
       "zookeeper-SERVER-BASE"
     ]
   }, {
-    "refName" : "HostTemplate-1-from-dnsNamePrefix-dn[0-3].region.cloudapp.azure.com",
-    "cardinality" : 4,
+    "refName" : "HostTemplate-2-from-dnsNamePrefix-dn[0-2].region.cloudapp.azure.com",
+    "cardinality" : 3,
     "roleConfigGroupsRefNames" : [ 
       "FLUME-AGENT-BASE",
       "hbase-REGIONSERVER-BASE", 
       "hdfs-DATANODE-BASE", 
       "hive-GATEWAY-BASE", 
+      "sqoop_client-GATEWAY-BASE",
       "impala-IMPALAD-BASE", 
       "kafka-KAFKA_BROKER-BASE",
-      "mapreduce-TASKTRACKER-BASE", 
       "spark_on_yarn-GATEWAY-BASE", 
-      "sqoop_client-GATEWAY-BASE", 
+      "kudu-KUDU_TSERVER-BASE",
       "yarn-NODEMANAGER-BASE" 
     ]
   } ],
@@ -352,9 +371,12 @@
     "hosts" : [ {
       "hostName" : "dnsNamePrefix-mn0.region.cloudapp.azure.com",
       "hostTemplateRefName" : "HostTemplate-0-from-dnsNamePrefix-mn0.region.cloudapp.azure.com"
-    }, {
-      "hostNameRange" : "dnsNamePrefix-dn[0-3].region.cloudapp.azure.com",
-      "hostTemplateRefName" : "HostTemplate-1-from-dnsNamePrefix-dn[0-3].region.cloudapp.azure.com"
+    },{
+        "hostName" : "dnsNamePrefix-mn1.region.cloudapp.azure.com",
+        "hostTemplateRefName" : "HostTemplate-1-from-dnsNamePrefix-mn1.region.cloudapp.azure.com"
+      }, {
+      "hostNameRange" : "dnsNamePrefix-dn[0-2].region.cloudapp.azure.com",
+      "hostTemplateRefName" : "HostTemplate-2-from-dnsNamePrefix-dn[0-2].region.cloudapp.azure.com"
     } ],
     "variables" : [ {
       "name" : "hive-hive_metastore_database_host",
@@ -378,17 +400,20 @@
       "name" : "hue-database_user",
       "value" : "root"
     },{
-      "name" : "sqoop-database_host",
-      "value" : "dnsNamePrefix-mn0.region.cloudapp.azure.com"
-    }, {
-      "name" : "sqoop-database_password",
-      "value" : "cloudera"
-    }, {
-      "name" : "sqoop-database_type",
-      "value" : "mysql"
-    }, {
-      "name" : "sqoop-database_user",
-      "value" : "root"
+      "name": "kudu-KUDU_MASTER-BASE-fs_data_dirs",
+      "value": "/kudu/mdir"
+    },
+    {
+      "name": "kudu-KUDU_MASTER-BASE-fs_wal_dir",
+      "value": "/kudu/mwal"
+    },
+    {
+      "name": "kudu-KUDU_TSERVER-BASE-fs_data_dirs",
+      "value": "/kudu/tdir"
+    },
+    {
+      "name": "kudu-KUDU_TSERVER-BASE-fs_wal_dir",
+      "value": "/kudu/twal"
     },
     {
       "name" : "oozie-OOZIE_SERVER-BASE-oozie_database_host",
