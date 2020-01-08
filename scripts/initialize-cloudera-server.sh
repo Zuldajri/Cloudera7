@@ -63,8 +63,8 @@ set +e
 
 log "Set cloudera-manager.repo to CM v6"
 yum clean all >> "${LOG_FILE}" 2>&1
-rpm --import https://archive.cloudera.com/cm6/6.3.0/redhat7/yum/RPM-GPG-KEY-cloudera >> "${LOG_FILE}" 2>&1
-wget https://archive.cloudera.com/cm6/6.3.0/redhat7/yum/cloudera-manager.repo -O /etc/yum.repos.d/cloudera-manager.repo >> "${LOG_FILE}" 2>&1
+rpm --import https://archive.cloudera.com/cm6/6.3.1/redhat7/yum/RPM-GPG-KEY-cloudera >> "${LOG_FILE}" 2>&1
+wget https://archive.cloudera.com/cm6/6.3.1/redhat7/yum/cloudera-manager.repo -O /etc/yum.repos.d/cloudera-manager.repo >> "${LOG_FILE}" 2>&1
 
 ## MariaDB 10.1
 cat - >/etc/yum.repos.d/MariaDB.repo <<EOF
