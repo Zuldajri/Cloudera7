@@ -12,7 +12,6 @@
     "https://archive.cloudera.com/accumulo6/6.1/parcels/", 
     "https://archive.cloudera.com/kafka/parcels/latest/", 
     "http://archive.cloudera.com/kudu/parcels/latest/", 
-    "https://archive.cloudera.com/spark/parcels/latest/", 
     "https://archive.cloudera.com/sqoop-teradata-connector1/latest/", 
     "https://archive.cloudera.com/sqoop-connectors/parcels/latest/", 
     "https://archive.cloudera.com/sqoop-netezza-connector1/latest/"
