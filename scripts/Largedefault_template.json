@@ -1,24 +1,24 @@
 {
-  "cdhVersion" : "6.3.0",
+  "cdhVersion" : "6.3.2",
   "displayName" : "ClusterName",
-  "cmVersion" : "6.3.0",
+  "cmVersion" : "6.3.1",
   "repositories" : [ 
-    "https://archive.cloudera.com/cdh6/6.3.0/parcels/", 
+    "https://archive.cloudera.com/cdh6/6.3.2/parcels/", 
     "https://archive.cloudera.com/cdh5/parcels/5.16/", 
     "https://parcels.repos.intel.com/mkl/latest", 
     "https://archive.cloudera.com/cdsw1/1.6.0/parcels/", 
+    "https://archive.cloudera.com/spark/parcels/latest/", 
     "http://archive.cloudera.com/spark2/parcels/2.4.0.cloudera1/", 
     "https://archive.cloudera.com/accumulo-c5/parcels/latest/", 
     "https://archive.cloudera.com/accumulo6/6.1/parcels/", 
     "https://archive.cloudera.com/kafka/parcels/latest/", 
     "http://archive.cloudera.com/kudu/parcels/latest/", 
-    "https://archive.cloudera.com/spark/parcels/latest/", 
     "https://archive.cloudera.com/sqoop-teradata-connector1/latest/", 
     "https://archive.cloudera.com/sqoop-connectors/parcels/latest/", 
     "https://archive.cloudera.com/sqoop-netezza-connector1/latest/"
   ],
   "products" : [ {
-    "version" : "6.3.0-1.cdh6.3.0.p0.1279813",
+    "version" : "6.3.2-1.cdh6.3.2.p0.1605554",
     "product" : "CDH"
   } ],
   "services" : [ 
