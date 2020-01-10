@@ -55,7 +55,7 @@ with open ("/root/myRSAkey", "r") as f:
 instargs = cm_client.ApiHostInstallArguments(host_names=['10.3.0.4', '10.3.0.5', '10.3.0.6', '10.3.0.7', '10.3.0.9', '10.3.0.10', '10.3.0.11', '10.3.0.12', '10.3.0.13', '10.3.0.14'], 
                                              user_name='utilisateur', 
                                              password='passe',
-                                             cm_repo_url='https://archive.cloudera.com/cm6/6.3.0', 
+                                             cm_repo_url='https://archive.cloudera.com/cm6/6.3.1', 
                                              java_install_strategy='NONE', 
                                              ssh_port=22, 
                                              passphrase='')
