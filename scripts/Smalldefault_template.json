@@ -361,21 +361,6 @@
     }, {
       "name" : "hue-database_user",
       "value" : "root"
-    },{
-      "name": "kudu-KUDU_MASTER-BASE-fs_data_dirs",
-      "value": "/kudu/mdir"
-    },
-    {
-      "name": "kudu-KUDU_MASTER-BASE-fs_wal_dir",
-      "value": "/kudu/mwal"
-    },
-    {
-      "name": "kudu-KUDU_TSERVER-BASE-fs_data_dirs",
-      "value": "/kudu/tdir"
-    },
-    {
-      "name": "kudu-KUDU_TSERVER-BASE-fs_wal_dir",
-      "value": "/kudu/twal"
     },
     {
       "name" : "oozie-OOZIE_SERVER-BASE-oozie_database_host",
