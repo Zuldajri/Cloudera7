@@ -240,42 +240,6 @@
     "serviceType": "KAFKA"
   },
   {
-    "refName": "kudu",
-    "roleConfigGroups": [
-      {
-        "base": true,
-        "configs": [
-          {
-            "name": "fs_wal_dir",
-            "variable": "kudu-KUDU_MASTER-BASE-fs_wal_dir"
-          },
-          {
-            "name": "fs_data_dirs",
-            "variable": "kudu-KUDU_MASTER-BASE-fs_data_dirs"
-          }
-        ],
-        "refName": "kudu-KUDU_MASTER-BASE",
-        "roleType": "KUDU_MASTER"
-      },
-      {
-        "base": true,
-        "configs": [
-          {
-            "name": "fs_wal_dir",
-            "variable": "kudu-KUDU_TSERVER-BASE-fs_wal_dir"
-          },
-          {
-            "name": "fs_data_dirs",
-            "variable": "kudu-KUDU_TSERVER-BASE-fs_data_dirs"
-          }
-        ],
-        "refName": "kudu-KUDU_TSERVER-BASE",
-        "roleType": "KUDU_TSERVER"
-      }
-    ],
-    "serviceType": "KUDU"
-  },
-  {
     "refName" : "hive",
     "serviceType" : "HIVE",
     "serviceConfigs" : [ {
@@ -338,7 +302,6 @@
       "hive-HIVESERVER2-BASE", 
       "sqoop_client-GATEWAY-BASE",
       "kafka-KAFKA_BROKER-BASE",
-      "kudu-KUDU_MASTER-BASE",
       "spark_on_yarn-GATEWAY-BASE", 
       "spark_on_yarn-SPARK_YARN_HISTORY_SERVER-BASE", 
       "zookeeper-SERVER-BASE"
@@ -354,7 +317,6 @@
       "hive-HIVESERVER2-BASE", 
       "sqoop_client-GATEWAY-BASE",
       "kafka-KAFKA_BROKER-BASE",
-      "kudu-KUDU_MASTER-BASE",
       "spark_on_yarn-GATEWAY-BASE", 
       "yarn-JOBHISTORY-BASE", 
       "yarn-RESOURCEMANAGER-BASE",
@@ -372,7 +334,6 @@
       "impala-CATALOGSERVER-BASE", 
       "impala-STATESTORE-BASE",
       "kafka-KAFKA_BROKER-BASE",
-      "kudu-KUDU_MASTER-BASE",
       "spark_on_yarn-GATEWAY-BASE", 
       "zookeeper-SERVER-BASE"
     ]
@@ -388,7 +349,6 @@
       "impala-IMPALAD-BASE", 
       "kafka-KAFKA_BROKER-BASE",
       "spark_on_yarn-GATEWAY-BASE", 
-      "kudu-KUDU_TSERVER-BASE",
       "yarn-NODEMANAGER-BASE" 
     ]
   } ],
@@ -431,21 +391,6 @@
     }, {
       "name" : "hue-database_user",
       "value" : "root"
-    },{
-      "name": "kudu-KUDU_MASTER-BASE-fs_data_dirs",
-      "value": "/kudu/mdir"
-    },
-    {
-      "name": "kudu-KUDU_MASTER-BASE-fs_wal_dir",
-      "value": "/kudu/mwal"
-    },
-    {
-      "name": "kudu-KUDU_TSERVER-BASE-fs_data_dirs",
-      "value": "/kudu/tdir"
-    },
-    {
-      "name": "kudu-KUDU_TSERVER-BASE-fs_wal_dir",
-      "value": "/kudu/twal"
     },
     {
       "name" : "oozie-OOZIE_SERVER-BASE-oozie_database_host",
