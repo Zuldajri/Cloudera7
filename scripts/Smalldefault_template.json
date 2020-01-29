@@ -342,7 +342,6 @@
       "impala-CATALOGSERVER-BASE", 
       "impala-STATESTORE-BASE", 
       "kafka-KAFKA_BROKER-BASE",
-      "kudu-KUDU_MASTER-BASE",
       "hive-GATEWAY-BASE", 
       "spark_on_yarn-GATEWAY-BASE", 
       "spark_on_yarn-SPARK_YARN_HISTORY_SERVER-BASE", 
@@ -362,7 +361,6 @@
       "impala-IMPALAD-BASE", 
       "kafka-KAFKA_BROKER-BASE",
       "spark_on_yarn-GATEWAY-BASE", 
-      "kudu-KUDU_TSERVER-BASE",
       "yarn-NODEMANAGER-BASE" 
     ]
   } ],
