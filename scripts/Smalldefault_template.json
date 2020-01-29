@@ -244,42 +244,6 @@
     "serviceType": "KAFKA"
   },
   {
-    "refName": "kudu",
-    "roleConfigGroups": [
-      {
-        "base": true,
-        "configs": [
-          {
-            "name": "fs_wal_dir",
-            "variable": "kudu-KUDU_MASTER-BASE-fs_wal_dir"
-          },
-          {
-            "name": "fs_data_dirs",
-            "variable": "kudu-KUDU_MASTER-BASE-fs_data_dirs"
-          }
-        ],
-        "refName": "kudu-KUDU_MASTER-BASE",
-        "roleType": "KUDU_MASTER"
-      },
-      {
-        "base": true,
-        "configs": [
-          {
-            "name": "fs_wal_dir",
-            "variable": "kudu-KUDU_TSERVER-BASE-fs_wal_dir"
-          },
-          {
-            "name": "fs_data_dirs",
-            "variable": "kudu-KUDU_TSERVER-BASE-fs_data_dirs"
-          }
-        ],
-        "refName": "kudu-KUDU_TSERVER-BASE",
-        "roleType": "KUDU_TSERVER"
-      }
-    ],
-    "serviceType": "KUDU"
-  },
-  {
     "refName" : "hive",
     "serviceType" : "HIVE",
     "serviceConfigs" : [ {
