@@ -61,6 +61,9 @@
             "[concat(parameters('scriptsUri'), '/scripts/bootstrap.conf')]",
             "[concat(parameters('scriptsUri'), '/scripts/efm.properties')]",
             "[concat(parameters('scriptsUri'), '/scripts/mariadb.config')]",
+            "[concat(parameters('scriptsUri'), '/scripts/pg_hba.conf')]",
+            "[concat(parameters('scriptsUri'), '/scripts/postgresql.conf')]",
+            "[concat(parameters('scriptsUri'), '/scripts/pgsql_create_db.sql')]",
             "[concat(parameters('scriptsUri'), '/scripts/', parameters('tshirtSize'), 'default_template.json')]",  
             "[concat(parameters('scriptsUri'), '/scripts/', parameters('tshirtSize'), 'create_cluster.py')]"            
           ]
