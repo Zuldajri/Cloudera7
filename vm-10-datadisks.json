@@ -165,7 +165,7 @@
             "name": "[concat(variables('vmName'), copyIndex(),'_OSDisk')]",
             "caching": "ReadWrite",
             "createOption": "FromImage",
-            "diskSizeGB": 64,
+            "diskSizeGB": 128,
             "managedDisk": {
                               "storageAccountType": "[variables('storageAccountType')]"
                           }
@@ -226,7 +226,7 @@
                           }
             },
             {
-              "name": "[concat(variables('vmName'), copyIndex(),'_DataDisk76')]",
+              "name": "[concat(variables('vmName'), copyIndex(),'_DataDisk7')]",
               "diskSizeGB": 1023,
               "lun": 6,
               "createOption": "Empty",
