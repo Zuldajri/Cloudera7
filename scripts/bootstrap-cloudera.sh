@@ -116,7 +116,7 @@ OIFS=$IFS
 IFS=','
 for x in $NODE_IPS
 do
-  log "Workier IP: $x"
+  log "Worker IP: $x"
   line=$(echo "$x" | sed 's/:/ /' | sed 's/:/ /')
   wip_string+=$(echo "$line" | cut -d ' ' -f 1 | sed 's/$/,/')
   log "current wip_string is: $wip_string"
