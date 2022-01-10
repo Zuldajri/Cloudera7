@@ -18,7 +18,7 @@
   "variables": {},
   "resources": [
     {
-        "apiVersion": "2018-06-01",
+      "apiVersion": "2018-10-01",
       "type": "Microsoft.Compute/availabilitySets",
       "name": "[parameters('masterNodeASName')]",
       "sku": {
@@ -28,10 +28,10 @@
       "properties": { 
         "platformUpdateDomainCount": 2,
         "platformFaultDomainCount": 2
-                    }
+      }
     },
     {
-        "apiVersion": "2018-06-01",
+      "apiVersion": "2018-10-01",
       "type": "Microsoft.Compute/availabilitySets",
       "name": "[parameters('dataNodeASName')]",
        "sku": {
@@ -44,9 +44,9 @@
       }
     },
     {
-        "apiVersion": "2018-08-01",
+      "apiVersion": "2019-09-01",
       "type": "Microsoft.Network/networkSecurityGroups",
-      "name": "[concat(parameters('networkSpec').virtualNetworkName, '-sg')]",
+      "name": "[concat(parameters('networkSpec').virtualNetworkName, '-nsg')]",
       "location": "[parameters('location')]",
       "properties": {
         "securityRules": [
@@ -68,11 +68,11 @@
       }
     },
     {
-      "apiVersion": "2018-08-01",
+      "apiVersion": "2019-09-01",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[parameters('networkSpec').virtualNetworkName]",
       "dependsOn": [
-        "[concat('Microsoft.Network/networkSecurityGroups/', parameters('networkSpec').virtualNetworkName, '-sg')]"
+        "[concat('Microsoft.Network/networkSecurityGroups/', parameters('networkSpec').virtualNetworkName, '-nsg')]"
       ],
       "location": "[parameters('location')]",
       "properties": {
