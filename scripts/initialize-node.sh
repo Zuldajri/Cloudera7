@@ -168,8 +168,8 @@ timedatectl set-timezone UTC
 # CDSW requires Centos 7.5, so we trick it to believe it is...
 # echo "CentOS Linux release 7.5.1810 (Core)" > /etc/redhat-release
 
-log "-- Install Java OpenJDK8 and other tools"
-yum install -y java-1.8.0-openjdk-devel vim wget curl git bind-utils
+log "-- Install other tools"
+yum install -y vim wget curl git bind-utils rng-tools
 
 # Set system tuning params
 log "Set system tuning params"
