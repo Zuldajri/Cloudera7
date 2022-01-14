@@ -15,18 +15,14 @@ LOG_FILE="/var/log/cloudera-azure-initialize.log"
 
 # manually set EXECNAME because this file is called from another script and it $0 contains a 
 # relevant path
-EXECNAME="prepare-masternode-disks.sh"
+EXECNAME="prepare-datanode-disks.sh"
 
 # logs everything to the $LOG_FILE
 log() {
   echo "$(date) [${EXECNAME}]: $*" >> "${LOG_FILE}"
 }
 
-# ok this is the fun part. Let's create a file here
-# use temp file to use sudo
 cat > inputs2.sh << 'END'
-
-
 
 mountDriveForLogCloudera()
 {
@@ -41,44 +37,19 @@ mountDriveForLogCloudera()
   ln -s /log/cloudera /opt/cloudera
 }
 
-mountDriveForZookeeper()
+
+# Mount the block with difference size as log device
+# if minSize = maxSize, just pick minDevice
+# if maxSize > secondMax, aka, logdevice is the largest amoung them, mount maxDevice
+# else just use minDevice
+set_log_device()
 {
-  dirname=/log/cloudera/zookeeper
-  drivename=$1
-  mke2fs -F -t ext4 -b 4096 -E lazy_itable_init=1 -O sparse_super,dir_index,extent,has_journal,uninit_bg -m1 $drivename
-  mkdir $dirname
-  mount -o noatime,barrier=1 -t ext4 $drivename $dirname
-  UUID=`sudo lsblk -no UUID $drivename`
-  echo "UUID=$UUID   $dirname    ext4   defaults,noatime,discard,barrier=0 0 1" | sudo tee -a /etc/fstab
-}
-
-
-
-mountDriveForQJN()
-{
-  dirname=/data/dfs/
-  drivename=$1
-  mke2fs -F -t ext4 -b 4096 -E lazy_itable_init=1 -O sparse_super,dir_index,extent,has_journal,uninit_bg -m1 $drivename
-  mkdir /data
-  mkdir $dirname
-  mount -o noatime,barrier=1 -t ext4 $drivename $dirname
-  UUID=`sudo lsblk -no UUID $drivename`
-  echo "UUID=$UUID   $dirname    ext4   defaults,noatime,discard,barrier=0 0 1" | sudo tee -a /etc/fstab
-}
-
-mountDriveForMariaDB()
-{
-  dirname=/var/lib/mysql
-  drivename=$1
-  mke2fs -F -t ext4 -b 4096 -E lazy_itable_init=1 -O sparse_super,dir_index,extent,has_journal,uninit_bg -m1 $drivename
-  mkdir $dirname
-  mount -o noatime,barrier=1 -t ext4 $drivename $dirname
-  UUID=`sudo lsblk -no UUID $drivename`
-  echo "UUID=$UUID   $dirname    ext4   defaults,noatime,discard,barrier=0 0 1" | sudo tee -a /etc/fstab
-}
-
-prepare_unmounted_volumes()
-{
+  maxSize=0
+  maxCount=0
+  minSize=0
+  minDevice=""
+  maxDevice=""
+  logDevice=""
   # Each line contains an entry like /dev/<device name>
   MOUNTED_VOLUMES=$(df -h | grep -o -E "^/dev/[^[:space:]]*")
   
@@ -95,16 +66,65 @@ prepare_unmounted_volumes()
     if [[ ! ${part} =~ [0-9]$ && ! ${ALL_PARTITIONS} =~ $part[0-9] && $MOUNTED_VOLUMES != *$part* ]];then
       echo ${part}
       if [[ ${COUNTER} == 0 ]]; then
-        mountDriveForLogCloudera "/dev/$part"
-      elif [[ ${COUNTER} == 1 ]]; then
-        mountDriveForZookeeper "/dev/$part"
-      elif [[ ${COUNTER} == 2 ]]; then
-        mountDriveForQJN "/dev/$part"
-      elif [[ ${COUNTER} == 3 ]]; then
-        mountDriveForMariaDB "/dev/$part"
-      else prepare_disk "/data$COUNTER" "/dev/$part"
+        maxSize=`blockdev --getsize64 "/dev/$part"`
+        secMaxSize=${maxSize}
+        minSize=`blockdev --getsize64 "/dev/$part"`
+        minDevice="/dev/$part"
+        maxDevice="/dev/$part"
+      else
+        # Update max if applicable
+        current=`blockdev --getsize64 "/dev/$part"`
+        if [[ ${current} -ge ${maxSize} ]]; then
+          secMaxSize=${maxSize}
+          maxSize=${current}
+          maxDevice="/dev/$part"
+        fi
+        
+        # Update min if applicable
+        if [[ ${current} -lt ${minSize} ]]; then
+          minSize=${current}
+          minDevice="/dev/$part"
+        fi
       fi
       COUNTER=$(($COUNTER+1))
+    fi
+  done
+  if [[ ${minDevice} = ${maxDevice} ]]; then
+    logDevice=${minDevice}
+  elif [[ ${maxSize} -gt ${secMaxSize} ]]; then
+    logDevice=${maxDevice}
+  else
+    logDevice=${minDevice}
+  fi
+  echo "using logDevice ${logDevice}"
+}
+
+prepare_unmounted_volumes()
+{
+  # Figure out which is log device base on size
+  set_log_device
+  
+  # Each line contains an entry like /dev/<device name>
+  MOUNTED_VOLUMES=$(df -h | grep -o -E "^/dev/[^[:space:]]*")
+  
+  # Each line contains an entry like <device name> (no /dev/ prefix)
+  # (This awk script prints the last field of every line with line number
+  # greater than 2.)
+  ALL_PARTITIONS=$(awk 'FNR > 2 {print $NF}' /proc/partitions)
+  COUNTER=0
+  for part in $ALL_PARTITIONS; do
+    # If this partition does not end with a number (likely a partition of a
+    # mounted volume), is not equivalent to the alphabetic portion of another
+    # partition with digits at the end (likely a volume that has already been
+    # mounted), and is not contained in $MOUNTED_VOLUMES, and it is not $logDevice
+    if [[ ! ${part} =~ [0-9]$ && ! ${ALL_PARTITIONS} =~ $part[0-9] && $MOUNTED_VOLUMES != *$part* ]];then
+      echo ${part}
+      if [[ "/dev/$part" = ${logDevice} ]]; then
+        mountDriveForLogCloudera "/dev/$part"
+      else prepare_disk "/data$COUNTER" "/dev/$part"
+           COUNTER=$(($COUNTER+1))
+      fi
+      
     fi
   done
   wait # for all the background prepare_disk function calls to complete
@@ -163,11 +183,11 @@ prepare_disk()
 
 END
 
-log "------- prepare-masternode-disks.sh starting -------"
+log "------- prepare-datanode-disks.sh starting -------"
 
 sudo bash -c "source ./inputs2.sh; prepare_unmounted_volumes"
 
-log "------- prepare-masternode-disks.sh succeeded -------"
-
+log "------- prepare-datanode-disks.sh succeeded -------"
+ 
 # always `exit 0` on success
 exit 0
