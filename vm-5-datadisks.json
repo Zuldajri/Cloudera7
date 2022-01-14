@@ -44,7 +44,7 @@
     "vmName": "[concat(parameters('dnsNamePrefix'), '-dn')]",
     "nicName": "[concat(variables('vmName'), '-nic')]",
     "publicIPAddressName": "[concat(variables('vmName'), '-publicIP')]",
-    "securityGroupName": "[concat(parameters('dnsNamePrefix'), '-dn-sg')]"
+    "securityGroupName": "[concat(parameters('dnsNamePrefix'), '-dn-nsg')]"
   },
   "resources": [
     {
@@ -162,7 +162,7 @@
                           "version": "latest"
                       },
           "osDisk": {
-            "name": "[concat(variables('vmName'), copyIndex(),'_OSDisk')]",
+            "name": "[concat(variables('vmName'),'-OSDisk-', copyIndex())]",
             "caching": "ReadWrite",
             "createOption": "FromImage",
             "diskSizeGB": 128,
@@ -172,7 +172,7 @@
           },
           "dataDisks": [
             {
-              "name":  "[concat(variables('vmName'), copyIndex(),'_DataDisk1')]",
+              "name":  "[concat(variables('vmName'),'-DataDisk1-', copyIndex())]",
               "diskSizeGB": 512,
               "lun": 0,
               "createOption": "Empty",
@@ -181,7 +181,7 @@
                           }
             },
             {
-              "name": "[concat(variables('vmName'), copyIndex(),'_DataDisk2')]",
+              "name": "[concat(variables('vmName'),'-DataDisk2-', copyIndex())]",
               "diskSizeGB": 1023,
               "lun": 1,
               "createOption": "Empty",
@@ -190,7 +190,7 @@
                           }
             },
             {
-              "name": "[concat(variables('vmName'), copyIndex(),'_DataDisk3')]",
+              "name": "[concat(variables('vmName'),'-DataDisk3-', copyIndex())]",
               "diskSizeGB": 1023,
               "lun": 2,
               "createOption": "Empty",
@@ -199,7 +199,7 @@
                           }
             },
             {
-              "name": "[concat(variables('vmName'), copyIndex(),'_DataDisk4')]",
+              "name": "[concat(variables('vmName'),'-DataDisk4-', copyIndex())]",
               "diskSizeGB": 1023,
               "lun": 3,
               "createOption": "Empty",
@@ -208,7 +208,7 @@
                           }
             },
             {
-              "name": "[concat(variables('vmName'), copyIndex(),'_DataDisk5')]",
+              "name": "[concat(variables('vmName'),'-DataDisk5-', copyIndex())]",
               "diskSizeGB": 1023,
               "lun": 4,
               "createOption": "Empty",
@@ -217,7 +217,7 @@
                           }
             },
             {
-              "name": "[concat(variables('vmName'), copyIndex(),'_DataDisk6')]",
+              "name": "[concat(variables('vmName'),'-DataDisk6-', copyIndex())]",
               "diskSizeGB": 1023,
               "lun": 5,
               "createOption": "Empty",
