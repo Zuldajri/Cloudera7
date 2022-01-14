@@ -5,13 +5,13 @@
     "vnetID": {
       "type": "string"
     },
-    "dnsNamePrefix": {
+    "namePrefix": {
       "type": "string"
     },
     "scriptsUri": {
       "type": "string"
     },
-    "storageAccount": {
+    "storageType": {
       "type": "object"
     },
     "vmCount": {
@@ -40,11 +40,11 @@
     "singleQuote": "'",
     "masterIP": "[parameters('networkSpec').masterIP]",
     "workerIP": "[parameters('networkSpec').workerIP]",
-    "vmName": "[concat(parameters('dnsNamePrefix'), '-mn')]",
+    "vmName": "[concat(parameters('namePrefix'), '-mn')]",
     "nicName": "[concat(variables('vmName'), '-nic')]",
     "publicIPAddressName": "[concat(variables('vmName'), '-publicIP')]",
-    "storageAccountType": "[parameters('storageAccount').type]",
-    "securityGroupName": "[concat(parameters('dnsNamePrefix'), '-mn-sg')]"
+    "storageAccountType": "[parameters('storageType').type]",
+    "securityGroupName": "[concat(parameters('namePrefix'), '-mn-nsg')]"
   },
   "resources": [
     {
@@ -83,7 +83,7 @@
       "properties": {
         "publicIPAllocationMethod": "Dynamic",
         "dnsSettings": {
-          "domainNameLabel": "[concat(parameters('dnsNamePrefix'), '-mn', copyIndex())]"
+          "domainNameLabel": "[concat(parameters('namePrefix'), '-mn', copyIndex())]"
         }
       }
     },
@@ -162,7 +162,7 @@
                           "version": "latest"
                       },
           "osDisk": {
-            "name":"[concat(variables('vmName'), copyIndex(),'_OSDisk')]",
+            "name":"[concat(variables('vmName'),'-OSDisk-', copyIndex())]",
             "caching": "ReadWrite",
             "createOption": "FromImage",
             "diskSizeGB": 128,
@@ -172,7 +172,7 @@
           },
           "dataDisks": [
             {
-              "name": "[concat(variables('vmName'), copyIndex(),'_DataDisk1')]",
+              "name": "[concat(variables('vmName'),'-DataDisk1-', copyIndex())]",
               "diskSizeGB": 512,
               "lun": 0,
               "createOption": "Empty",
@@ -181,7 +181,7 @@
                           }
             },
             {
-              "name":  "[concat(variables('vmName'), copyIndex(),'_DataDisk2')]",
+              "name":  "[concat(variables('vmName'),'-DataDisk2-', copyIndex())]",
               "diskSizeGB": 512,
               "lun": 1,
               "createOption": "Empty",
@@ -190,7 +190,7 @@
                           }
             },
             {
-              "name":  "[concat(variables('vmName'), copyIndex(),'_DataDisk3')]",
+              "name":  "[concat(variables('vmName'),'-DataDisk3-', copyIndex())]",
               "diskSizeGB": 512,
               "lun": 2,
               "createOption": "Empty",
@@ -199,7 +199,7 @@
                           }
             },
             {
-              "name":  "[concat(variables('vmName'), copyIndex(),'_DataDisk4')]",
+              "name":  "[concat(variables('vmName'),'-DataDisk4-', copyIndex())]",
               "diskSizeGB": 512,
               "lun": 3,
               "createOption": "Empty",
@@ -218,6 +218,9 @@
         }
       }
     },
+
+
+    
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
        "apiVersion": "2018-06-01",
@@ -240,7 +243,7 @@
             "[concat(parameters('scriptsUri'), '/scripts/prepare-masternode-disks.sh')]",
             "[concat(parameters('scriptsUri'), '/scripts/initialize-node.sh')]"
           ],
-          "commandToExecute": "[concat('sh initialize-node.sh ', variables('singleQuote'), variables('masterIP'), variables('singleQuote'), ' ', variables('singleQuote'), variables('workerIP'), variables('singleQuote'), ' ', variables('singleQuote'), parameters('dnsNamePrefix'), variables('singleQuote'), ' ', variables('singleQuote'), reference(concat(variables('publicIPAddressName'), copyIndex())).dnsSettings.fqdn, variables('singleQuote'), ' ', variables('singleQuote'), parameters('clusterSpec').masterNodeCount, variables('singleQuote'), ' ', variables('singleQuote'), parameters('clusterSpec').dataNodeCount, variables('singleQuote'), ' ', variables('singleQuote'), parameters('vmSpec').adminUsername, variables('singleQuote'), ' ', 'masternode', ' >> /var/log/cloudera-azure-initialize.log 2>&1')]"
+          "commandToExecute": "[concat('sh initialize-node.sh ', variables('singleQuote'), variables('masterIP'), variables('singleQuote'), ' ', variables('singleQuote'), variables('workerIP'), variables('singleQuote'), ' ', variables('singleQuote'), parameters('namePrefix'), variables('singleQuote'), ' ', variables('singleQuote'), reference(concat(variables('publicIPAddressName'), copyIndex())).dnsSettings.fqdn, variables('singleQuote'), ' ', variables('singleQuote'), parameters('clusterSpec').masterNodeCount, variables('singleQuote'), ' ', variables('singleQuote'), parameters('clusterSpec').dataNodeCount, variables('singleQuote'), ' ', variables('singleQuote'), parameters('vmSpec').adminUsername, variables('singleQuote'), ' ', 'masternode', ' >> /var/log/cloudera-azure-initialize.log 2>&1')]"
         }
       }
     }
