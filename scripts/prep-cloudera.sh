@@ -51,10 +51,10 @@ runuser -l $ADMINUSER -c "chmod 600 ~/.ssh/id_rsa*"
 
 log "set private key"
 #use the key from the key vault as the SSH private key
-openssl rsa -in /var/lib/waagent/*.prv -out /home/"${ADMINUSER}"/.ssh/id_rsa
 chmod 600 /home/"$ADMINUSER"/.ssh/id_rsa
 chown "$ADMINUSER" /home/"$ADMINUSER"/.ssh/id_rsa
 
+mkdir ~/.ssh
 
 cat /home/"${ADMINUSER}"/.ssh/authorized_keys >> ~/.ssh/authorized_keys
 cat /home/"${ADMINUSER}"/.ssh/id_rsa >> ~/.ssh/id_rsa
