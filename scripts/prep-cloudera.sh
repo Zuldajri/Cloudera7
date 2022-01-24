@@ -68,7 +68,7 @@ eval `ssh-agent`
 ssh-add ~/.ssh/id_rsa
 
 log "install Docker"
-sudo yum update -y
+sudo yum update -y --exclude=WALinuxAgent
 sudo yum install git -y
 sudo yum install ca-certificates curl gnupg  -y
 sudo yum install -y yum-utils
