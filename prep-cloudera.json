@@ -5,7 +5,7 @@
     "clusterName": {
       "type": "string"
     },
-    "dnsNamePrefix": {
+    "namePrefix": {
       "type": "string"
     },
     "scriptsUri": {
