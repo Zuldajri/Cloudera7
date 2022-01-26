@@ -37,6 +37,16 @@ mountDriveForLogCloudera()
   ln -s /log/cloudera /opt/cloudera
 }
 
+mountDriveForQJN()
+{
+  dirname=/dfs/
+  drivename=$1
+  mke2fs -F -t ext4 -b 4096 -E lazy_itable_init=1 -O sparse_super,dir_index,extent,has_journal,uninit_bg -m1 $drivename
+  mkdir /dfs
+  mount -o noatime,barrier=1 -t ext4 $drivename $dirname
+  UUID=`sudo lsblk -no UUID $drivename`
+  echo "UUID=$UUID   $dirname    ext4   defaults,noatime,discard,barrier=0 0 1" | sudo tee -a /etc/fstab
+}
 
 # Mount the block with difference size as log device
 # if minSize = maxSize, just pick minDevice
