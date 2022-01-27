@@ -82,6 +82,34 @@ cd cloudera-deploy
 
 chmod +x quickstart.sh
 
+log "install python"
+sudo yum install -y python36-devel git curl which bash gcc sshpass
+sudo python3 -m pip install pip==21.0.1 
+
+pip3 install setuptools
+pip3 install ansible
+
+ansible-galaxy collection install --force git+https://github.com/cloudera-labs/cloudera.cluster.git
+ansible-galaxy collection install --force git+https://github.com/cloudera-labs/cloudera.cloud.git
+ansible-galaxy collection install --force git+https://github.com/cloudera-labs/cloudera.exe.git
+
+ansible-galaxy install -r runner/payload/deps/ansible.yml
+pip3 install -r runner/payload/deps/python_base.txt
+
+tee -a ansible.cfg << EOF
+[defaults]
+inventory=inventory
+callback_whitelist = ansible.posix.profile_tasks
+host_key_checking = False
+gathering = smart
+pipelining = True
+deprecation_warnings=False
+[ssh_connection]
+retries = 10
+EOF
+
+
+
 log "------- prep-cloudera.sh succeeded -------"
 
 # always `exit 0` on success
