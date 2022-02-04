@@ -48,6 +48,28 @@ mountDriveForQJN1()
   echo "UUID=$UUID   $dirname    ext4   defaults,noatime,discard,barrier=0 0 1" | sudo tee -a /etc/fstab
 }
 
+mountDriveForQJN2()
+{
+  dirname=/dfs2/
+  drivename=$1
+  mke2fs -F -t ext4 -b 4096 -E lazy_itable_init=1 -O sparse_super,dir_index,extent,has_journal,uninit_bg -m1 $drivename
+  mkdir /dfs
+  mount -o noatime,barrier=1 -t ext4 $drivename $dirname
+  UUID=`sudo lsblk -no UUID $drivename`
+  echo "UUID=$UUID   $dirname    ext4   defaults,noatime,discard,barrier=0 0 1" | sudo tee -a /etc/fstab
+}
+
+mountDriveForQJN3()
+{
+  dirname=/dfs3/
+  drivename=$1
+  mke2fs -F -t ext4 -b 4096 -E lazy_itable_init=1 -O sparse_super,dir_index,extent,has_journal,uninit_bg -m1 $drivename
+  mkdir /dfs
+  mount -o noatime,barrier=1 -t ext4 $drivename $dirname
+  UUID=`sudo lsblk -no UUID $drivename`
+  echo "UUID=$UUID   $dirname    ext4   defaults,noatime,discard,barrier=0 0 1" | sudo tee -a /etc/fstab
+}
+
 prepare_unmounted_volumes()
 {
   # Each line contains an entry like /dev/<device name>
@@ -68,7 +90,11 @@ prepare_unmounted_volumes()
       if [[ ${COUNTER} == 0 ]]; then
         mountDriveForLogCloudera "/dev/$part"
       elif [[ ${COUNTER} == 1 ]]; then
-        mountDriveForQJN "/dev/$part"
+        mountDriveForQJN1 "/dev/$part"
+      elif [[ ${COUNTER} == 2 ]]; then
+        mountDriveForQJN2 "/dev/$part"
+      elif [[ ${COUNTER} == 3 ]]; then
+        mountDriveForQJN3 "/dev/$part"
       else prepare_disk "/data$COUNTER" "/dev/$part"
       fi
       COUNTER=$(($COUNTER+1))
