@@ -42,7 +42,7 @@ mountDriveForQJN1()
   dirname=/dfs1/
   drivename=$1
   mke2fs -F -t ext4 -b 4096 -E lazy_itable_init=1 -O sparse_super,dir_index,extent,has_journal,uninit_bg -m1 $drivename
-  mkdir /dfs
+  mkdir /dfs1
   mount -o noatime,barrier=1 -t ext4 $drivename $dirname
   UUID=`sudo lsblk -no UUID $drivename`
   echo "UUID=$UUID   $dirname    ext4   defaults,noatime,discard,barrier=0 0 1" | sudo tee -a /etc/fstab
@@ -53,7 +53,7 @@ mountDriveForQJN2()
   dirname=/dfs2/
   drivename=$1
   mke2fs -F -t ext4 -b 4096 -E lazy_itable_init=1 -O sparse_super,dir_index,extent,has_journal,uninit_bg -m1 $drivename
-  mkdir /dfs
+  mkdir /dfs2
   mount -o noatime,barrier=1 -t ext4 $drivename $dirname
   UUID=`sudo lsblk -no UUID $drivename`
   echo "UUID=$UUID   $dirname    ext4   defaults,noatime,discard,barrier=0 0 1" | sudo tee -a /etc/fstab
@@ -64,7 +64,7 @@ mountDriveForQJN3()
   dirname=/dfs3/
   drivename=$1
   mke2fs -F -t ext4 -b 4096 -E lazy_itable_init=1 -O sparse_super,dir_index,extent,has_journal,uninit_bg -m1 $drivename
-  mkdir /dfs
+  mkdir /dfs3
   mount -o noatime,barrier=1 -t ext4 $drivename $dirname
   UUID=`sudo lsblk -no UUID $drivename`
   echo "UUID=$UUID   $dirname    ext4   defaults,noatime,discard,barrier=0 0 1" | sudo tee -a /etc/fstab
