@@ -173,7 +173,7 @@
           "dataDisks": [
             {
               "name": "[concat(variables('vmName'),'-DataDisk1-', copyIndex())]",
-              "diskSizeGB": 512,
+              "diskSizeGB": 1023,
               "lun": 0,
               "createOption": "Empty",
               "managedDisk": {
