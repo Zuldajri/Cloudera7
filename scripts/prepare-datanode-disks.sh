@@ -70,6 +70,17 @@ mountDriveForQJN3()
   echo "UUID=$UUID   $dirname    ext4   defaults,noatime,discard,barrier=0 0 1" | sudo tee -a /etc/fstab
 }
 
+mountDriveForQJN4()
+{
+  dirname=/dfs4/
+  drivename=$1
+  mke2fs -F -t ext4 -b 4096 -E lazy_itable_init=1 -O sparse_super,dir_index,extent,has_journal,uninit_bg -m1 $drivename
+  mkdir /dfs4
+  mount -o noatime,barrier=1 -t ext4 $drivename $dirname
+  UUID=`sudo lsblk -no UUID $drivename`
+  echo "UUID=$UUID   $dirname    ext4   defaults,noatime,discard,barrier=0 0 1" | sudo tee -a /etc/fstab
+}
+
 prepare_unmounted_volumes()
 {
   # Each line contains an entry like /dev/<device name>
