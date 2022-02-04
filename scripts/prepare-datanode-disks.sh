@@ -106,6 +106,8 @@ prepare_unmounted_volumes()
         mountDriveForQJN2 "/dev/$part"
       elif [[ ${COUNTER} == 3 ]]; then
         mountDriveForQJN3 "/dev/$part"
+      elif [[ ${COUNTER} == 4 ]]; then
+        mountDriveForQJN4 "/dev/$part"
       else prepare_disk "/data$COUNTER" "/dev/$part"
       fi
       COUNTER=$(($COUNTER+1))
