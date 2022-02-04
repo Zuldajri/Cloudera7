@@ -37,9 +37,9 @@ mountDriveForLogCloudera()
   ln -s /log/cloudera /opt/cloudera
 }
 
-mountDriveForQJN()
+mountDriveForQJN1()
 {
-  dirname=/dfs/
+  dirname=/dfs1/
   drivename=$1
   mke2fs -F -t ext4 -b 4096 -E lazy_itable_init=1 -O sparse_super,dir_index,extent,has_journal,uninit_bg -m1 $drivename
   mkdir /dfs
