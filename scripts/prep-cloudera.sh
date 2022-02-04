@@ -30,7 +30,7 @@ VMSIZE=${11}
 PRIVATEKEY=${12}
 CLUSTERNAME=${13}
 LOCATION=${14}
-LICENSE=${15}
+LICENSE="${15}"
 TSHIRTSIZE=${16}
 
 CLUSTERNAME=$NAMEPREFIX
@@ -48,6 +48,11 @@ echo $(date) " - Generating Private keys for Cloudera Installation"
 
 runuser -l $ADMINUSER -c "echo -e \"$PRIVATEKEY\" > ~/.ssh/id_rsa"
 runuser -l $ADMINUSER -c "chmod 600 ~/.ssh/id_rsa*"
+
+log "------- set the license -------"
+touch ~/.cdp/my_cloudera_license_2021.txt
+echo $LICENSE > ~/.cdp/my_cloudera_license_2021.txt
+
 
 
 log "set private key"
