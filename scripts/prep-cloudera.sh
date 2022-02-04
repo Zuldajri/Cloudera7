@@ -212,12 +212,6 @@ if [ ! "$(docker ps -q -f name=${CONTAINER_NAME})" ]; then
     echo "Installing the cloudera-deploy project to the execution container '${CONTAINER_NAME}'"
     docker exec -td "${CONTAINER_NAME}" /usr/bin/env git clone https://github.com/cloudera-labs/cloudera-deploy.git /opt/cloudera-deploy --depth 1
     
-    echo "Removing the Definition File to the execution container '${CONTAINER_NAME}'"
-    docker exec -td "${CONTAINER_NAME}" /usr/bin/env rm /opt/cloudera-deploy/examples/sandbox/definition.yml
-
-    echo "Updating the Definition File to the execution container '${CONTAINER_NAME}'"
-    docker exec -td "${CONTAINER_NAME}" /usr/bin/env wget https://raw.githubusercontent.com/Zuldajri/Cloudera7/master/scripts/definition.yml -O /opt/cloudera-deploy/examples/sandbox/definition.yml
-
     if [ -n "${CLDR_COLLECTION_PATH}" ]; then
       docker exec -td "${CONTAINER_NAME}" /usr/bin/env rm -rf /opt/cldr-runner/collections/ansible_collections/cloudera
     fi
