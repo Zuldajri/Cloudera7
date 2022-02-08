@@ -147,7 +147,7 @@ rm -rf /var/lib/waagent/custom-script/download/1/cloudera-deploy/profile.yml
 wget https://raw.githubusercontent.com/Zuldajri/Cloudera7/master/scripts/profile.yml -O /var/lib/waagent/custom-script/download/1/cloudera-deploy/profile.yml
 sudo sed -i "s/MYSECRETPASSWORD/$ADMIN_PASSWORD/g" /var/lib/waagent/custom-script/download/1/cloudera-deploy/profile.yml
 
-wget https://raw.githubusercontent.com/Zuldajri/Cloudera7/master/scripts/inventory_static.ini -O /var/lib/waagent/custom-script/download/1/cloudera-deploy/inventory_static.ini
+wget https://raw.githubusercontent.com/Zuldajri/Cloudera7/master/scripts/"$TSHIRTSIZE"_inventory_static.ini -O /var/lib/waagent/custom-script/download/1/cloudera-deploy/inventory_static.ini
 sudo sed -i "s/NAMEPREFIX/$NAMEPREFIX/g" /var/lib/waagent/custom-script/download/1/cloudera-deploy/inventory_static.ini
 sudo sed -i "s/ADMINUSER/$ADMINUSER/g" /var/lib/waagent/custom-script/download/1/cloudera-deploy/inventory_static.ini
 sudo sed -i "s/LOCATION/$LOCATION/g" /var/lib/waagent/custom-script/download/1/cloudera-deploy/inventory_static.ini
