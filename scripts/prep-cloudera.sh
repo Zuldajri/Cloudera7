@@ -152,6 +152,10 @@ sudo sed -i "s/NAMEPREFIX/$NAMEPREFIX/g" /var/lib/waagent/custom-script/download
 sudo sed -i "s/ADMINUSER/$ADMINUSER/g" /var/lib/waagent/custom-script/download/1/cloudera-deploy/inventory_static.ini
 sudo sed -i "s/LOCATION/$LOCATION/g" /var/lib/waagent/custom-script/download/1/cloudera-deploy/inventory_static.ini
 
+rm -rf /root/.ansible/collections/ansible_collections/cloudera/cluster/roles/prereqs/os/defaults/main.yml
+wget https://raw.githubusercontent.com/Zuldajri/Cloudera7/master/scripts/main.yml -O /root/.ansible/collections/ansible_collections/cloudera/cluster/roles/prereqs/os/defaults/main.yml
+
+ansible-playbook /var/lib/waagent/custom-script/download/1/cloudera-deploy/main.yml -e "definition_path=/var/lib/waagent/custom-script/download/1/cloudera-deploy/examples/sandbox" -e "profile=/var/lib/waagent/custom-script/download/1/cloudera-deploy/profile.yml" -i /var/lib/waagent/custom-script/download/1/cloudera-deploy/inventory_static.ini -t default_cluster
 
 
 log "------- prep-cloudera.sh succeeded -------"
