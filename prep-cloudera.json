@@ -36,7 +36,7 @@
       "type": "string"
     },
     "license": {
-      "type": "securestring"
+      "type": "string"
     },
     "adminPassword": {
       "type": "securestring" 
