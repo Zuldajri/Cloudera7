@@ -134,7 +134,20 @@ cat <<SSH_HOST_KEY
   documentation for further details on managing SSH host key checking.
 SSH_HOST_KEY
 
+rm -rf /var/lib/waagent/custom-script/download/1/cloudera-deploy/examples/sandbox/definition.yml
+wget https://raw.githubusercontent.com/Zuldajri/Cloudera7/master/scripts/definition.yml -O /var/lib/waagent/custom-script/download/1/cloudera-deploy/examples/sandbox/definition.yml
 
+rm -rf /var/lib/waagent/custom-script/download/1/cloudera-deploy/roles/cloudera_deploy/defaults/basic_cluster.yml
+wget https://raw.githubusercontent.com/Zuldajri/Cloudera7/master/scripts/basic_cluster.yml -O /var/lib/waagent/custom-script/download/1/cloudera-deploy/roles/cloudera_deploy/defaults/basic_cluster.yml
+
+rm -rf /var/lib/waagent/custom-script/download/1/cloudera-deploy/profile.yml
+wget https://raw.githubusercontent.com/Zuldajri/Cloudera7/master/scripts/profile.yml -O /var/lib/waagent/custom-script/download/1/cloudera-deploy/profile.yml
+sudo sed -i "s/MYSECRETPASSWORD/$ADMIN_PASSWORD/g" /var/lib/waagent/custom-script/download/1/cloudera-deploy/profile.yml
+
+wget https://raw.githubusercontent.com/Zuldajri/Cloudera7/master/scripts/inventory_static.ini -O /var/lib/waagent/custom-script/download/1/cloudera-deploy/inventory_static.ini
+sudo sed -i "s/NAMEPREFIX/$NAMEPREFIX/g" /var/lib/waagent/custom-script/download/1/cloudera-deploy/inventory_static.ini
+sudo sed -i "s/ADMINUSER/$ADMINUSER/g" /var/lib/waagent/custom-script/download/1/cloudera-deploy/inventory_static.ini
+sudo sed -i "s/LOCATION/$LOCATION/g" /var/lib/waagent/custom-script/download/1/cloudera-deploy/inventory_static.ini
 
 
 
