@@ -51,9 +51,12 @@ runuser -l $ADMINUSER -c "echo -e \"$PRIVATEKEY\" > ~/.ssh/id_rsa"
 runuser -l $ADMINUSER -c "chmod 600 ~/.ssh/id_rsa*"
 
 log "------- set the license -------"
+runuser -l $ADMINUSER -c "mkdir ~/.cdp"
+runuser -l $ADMINUSER -c "echo -e \"$LICENSE\" > ~/.cdp/my_cloudera_license_2021.txt"
+runuser -l $ADMINUSER -c "chmod 600 ~/.cdp/my_cloudera_license_2021.txt"
 mkdir ~/.cdp
-touch ~/.cdp/my_cloudera_license_2021.txt
-echo echo -e \"$LICENSE\" > ~/.cdp/my_cloudera_license_2021.txt
+cat /home/"${ADMINUSER}"/.cdp/my_cloudera_license_2021.txt >> ~/.cdp/my_cloudera_license_2021.txt
+chmod 400 ~/.cdp/my_cloudera_license_2021.txt
 
 
 
