@@ -34,7 +34,7 @@ LICENSE=${15}
 ADMIN_PASSWORD=${16}
 TSHIRTSIZE=${17}
 
-CLUSTERNAME=$NAMEPREFIX
+
 
 # logs everything to the $LOG_FILE
 log() {
@@ -142,6 +142,7 @@ wget https://raw.githubusercontent.com/Zuldajri/Cloudera7/master/scripts/definit
 
 rm -rf /var/lib/waagent/custom-script/download/1/cloudera-deploy/roles/cloudera_deploy/defaults/basic_cluster.yml
 wget https://raw.githubusercontent.com/Zuldajri/Cloudera7/master/scripts/basic_cluster.yml -O /var/lib/waagent/custom-script/download/1/cloudera-deploy/roles/cloudera_deploy/defaults/basic_cluster.yml
+sudo sed -i "s/CLUSTERNAME/$CLUSTERNAME/g" /var/lib/waagent/custom-script/download/1/cloudera-deploy/roles/cloudera_deploy/defaults/basic_cluster.yml
 
 rm -rf /var/lib/waagent/custom-script/download/1/cloudera-deploy/profile.yml
 wget https://raw.githubusercontent.com/Zuldajri/Cloudera7/master/scripts/profile.yml -O /var/lib/waagent/custom-script/download/1/cloudera-deploy/profile.yml
