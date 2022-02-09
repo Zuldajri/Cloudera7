@@ -17,7 +17,7 @@
 cloudera_manager_version: 7.4.4
 
 clusters:
-  - name: Basic Cluster
+  - name: CLUSTERNAME
     services: [HDFS, YARN, ZOOKEEPER]
     repositories:
       - https://archive.cloudera.com/cdh7/7.1.7.0/parcels/
