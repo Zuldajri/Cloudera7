@@ -70,7 +70,7 @@ private_key_file: '~/.ssh/id_rsa'
 ## Required if deploying a CDP Cluster for Private Cloud in a mode other than Trial
 ## Should be in your local profile or the definition directory
 ## A cluster with a Trial license will be deployed if this is not specified
-license_file: "~/.cdp/my_cloudera_license_2021.txt"
+#license_file: "~/.cdp/my_cloudera_license_2021.txt"
 
 ## Cloud Credentials ##
 
