@@ -24,7 +24,7 @@ clusters:
     configs:
       HDFS:
         DATANODE:
-          dfs_data_dir_list: /dfs1/dn, /dfs2/dn, /dfs3/dn, /dfs4/dn
+          dfs_data_dir_list: /dfs1/dn, /dfs2/dn, /dfs3/dn, /dfs4/dn, /dfs5/dn, /dfs6/dn
         NAMENODE:
           dfs_name_dir_list: /dfs/nn
         SECONDARYNAMENODE:
