@@ -224,6 +224,15 @@
               "managedDisk": {
                               "storageAccountType": "[variables('storageAccountType')]"
                           }
+            },
+            {
+              "name": "[concat(variables('vmName'),'-DataDisk7-', copyIndex())]",
+              "diskSizeGB": 1023,
+              "lun": 6,
+              "createOption": "Empty",
+              "managedDisk": {
+                              "storageAccountType": "[variables('storageAccountType')]"
+                          }
             }
           ]
         },
