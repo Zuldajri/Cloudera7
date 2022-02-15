@@ -81,6 +81,28 @@ mountDriveForQJN4()
   echo "UUID=$UUID   $dirname    ext4   defaults,noatime,discard,barrier=0 0 1" | sudo tee -a /etc/fstab
 }
 
+mountDriveForQJN5()
+{
+  dirname=/dfs5/
+  drivename=$1
+  mke2fs -F -t ext4 -b 4096 -E lazy_itable_init=1 -O sparse_super,dir_index,extent,has_journal,uninit_bg -m1 $drivename
+  mkdir /dfs5
+  mount -o noatime,barrier=1 -t ext4 $drivename $dirname
+  UUID=`sudo lsblk -no UUID $drivename`
+  echo "UUID=$UUID   $dirname    ext4   defaults,noatime,discard,barrier=0 0 1" | sudo tee -a /etc/fstab
+}
+
+mountDriveForQJN6()
+{
+  dirname=/dfs6/
+  drivename=$1
+  mke2fs -F -t ext4 -b 4096 -E lazy_itable_init=1 -O sparse_super,dir_index,extent,has_journal,uninit_bg -m1 $drivename
+  mkdir /dfs6
+  mount -o noatime,barrier=1 -t ext4 $drivename $dirname
+  UUID=`sudo lsblk -no UUID $drivename`
+  echo "UUID=$UUID   $dirname    ext4   defaults,noatime,discard,barrier=0 0 1" | sudo tee -a /etc/fstab
+}
+
 prepare_unmounted_volumes()
 {
   # Each line contains an entry like /dev/<device name>
@@ -108,6 +130,10 @@ prepare_unmounted_volumes()
         mountDriveForQJN3 "/dev/$part"
       elif [[ ${COUNTER} == 4 ]]; then
         mountDriveForQJN4 "/dev/$part"
+      elif [[ ${COUNTER} == 5 ]]; then
+        mountDriveForQJN5 "/dev/$part"
+      elif [[ ${COUNTER} == 6 ]]; then
+        mountDriveForQJN6 "/dev/$part"
       else prepare_disk "/data$COUNTER" "/dev/$part"
       fi
       COUNTER=$(($COUNTER+1))
